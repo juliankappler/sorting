@@ -250,15 +250,14 @@ class mergesort:
             #
             while (n > 0):
                 if n > 1:
-                    new_list.append(self.merge(current_list[0],
-                                               current_list[1]))
-                    del current_list[0]
-                    del current_list[0]
+                    new_list.append(
+                                self.merge(current_list.pop(0),
+                                            current_list.pop(0))
+                                    )
                     n -= 2
                 else:
-                    new_list.append(current_list[0])
-                    del current_list[0]
-                    n -= 1
+                    new_list.append(current_list.pop(0))
+                    break
             #
             current_list = new_list
             n = len(current_list)
