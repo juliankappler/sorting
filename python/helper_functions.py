@@ -21,8 +21,11 @@ def compare_algorithms(algorithms,
                        sorted_input=False,
                        ):
 
-    T = np.zeros([3,len(Ns),N_samples],dtype=int)
-    Times = np.zeros([3,len(Ns)],dtype=float)
+    T = np.zeros([len(algorithms.keys()),
+                  len(Ns),
+                  N_samples],dtype=int)
+    Times = np.zeros([len(algorithms.keys()),
+                      len(Ns)],dtype=float)
 
     for i,N in enumerate(Ns):
         #
@@ -67,6 +70,8 @@ def plot_results(algorithms,
                  filename_prefix=None):
         N_samples = len(T[0,0])
         #
+        markers = ['o','s','v','*']
+        #
         # First plot: 
         # Mean number of array value comparisons per sorting
         #
@@ -75,7 +80,7 @@ def plot_results(algorithms,
 
         for i,name in enumerate(algorithms.keys()):
                 ax.plot(Ns,np.mean(T[i],axis=-1),
-                        marker='o',
+                        marker=markers[i],
                         label=name)
         
         #
@@ -144,7 +149,7 @@ def plot_results(algorithms,
         for i,name in enumerate(algorithms.keys()):
                 y = Times[i]/N_samples * 1e3
                 ax.plot(Ns,y,
-                        marker='o',
+                        marker=markers[i],
                         label=name)
                 ys.append(y)
         ax.set_xscale('log')

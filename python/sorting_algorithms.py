@@ -208,3 +208,63 @@ class quicksort:
 
    
 
+class mergesort:
+
+    def merge(self,list1,list2):
+        #
+        out_list = []
+        #
+        n1 = len(list1)
+        n2 = len(list2)
+        #
+        while (n1 + n2) > 0:
+            #
+            if n1 == 0:
+                v = list2.pop(0)
+                n2 -= 1
+            elif n2 == 0:
+                v = list1.pop(0)
+                n1 -= 1
+            else:
+                self.T += 1
+                if list1[0] < list2[0]:
+                    v = list1.pop(0)
+                    n1 -= 1
+                else:
+                    v = list2.pop(0)
+                    n2 -= 1
+            out_list.append(v)
+        return out_list
+
+    #
+    def sort(self,x):
+        #
+        current_list = [[i] for i in x]
+        n = len(current_list)
+        #
+        self.T = 0
+        #
+        while (n > 1):
+            #
+            new_list = []
+            #
+            while (n > 0):
+                if n > 1:
+                    new_list.append(self.merge(current_list[0],
+                                               current_list[1]))
+                    del current_list[0]
+                    del current_list[0]
+                    n -= 2
+                else:
+                    new_list.append(current_list[0])
+                    del current_list[0]
+                    n -= 1
+            #
+            current_list = new_list
+            n = len(current_list)
+            #
+        # return result
+        output = {'x':current_list[0],
+                  'T':self.T}
+        #
+        return output
