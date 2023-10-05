@@ -227,7 +227,7 @@ class mergesort:
                 n1 -= 1
             else:
                 self.T += 1
-                if list1[0] < list2[0]:
+                if list1[0] <= list2[0]:
                     v = list1.pop(0)
                     n1 -= 1
                 else:
@@ -264,6 +264,95 @@ class mergesort:
             #
         # return result
         output = {'x':current_list[0],
+                  'T':self.T}
+        #
+        return output
+    
+
+class heapsort():
+
+    def create_heap(self,
+                    n, # length of subarray of self.x to be considered
+                    ): 
+        #
+        # go through all nodes in reverse, and sift down until
+        # the root node is reached
+        #
+        i = (n - 2)//2 # index of parent node of last node
+        # (note that n-1 is the last node, and the parent node
+        #  of that is ((n-1)-1 )//2 )
+        while (i >= 0):
+            #
+            # repair heap at each parent
+            self.sift_down(i=i,
+                           n=n)
+            #
+            i -= 1
+        #
+        return
+
+    def sift_down(self,
+                  i, # index of starting node for sifting down
+                    n, # length of subarray of self.x to be considered
+                    ):
+        '''
+        Repairs a heap in the array self.x at index i,
+        considering only the subarray
+        self.x[:n] = [ self.x[0], ..., self.x[n-1] ]
+        '''
+        j = 2*i + 1 # index of first child
+        #
+        while (j < n): # current node has at least one child
+            #
+            # strategy:
+            # take the largest of these values
+            #   self.x[i], 
+            #   self.x[2*i+1] = self.x[j],
+            #   self.x[2*i+2] = self.x[j+1],
+            # and make that value the root node.
+            #
+            if (j + 1 < n): # if the current node also has a second child
+                # find out which child has the larger value
+                self.T += 1
+                if self.x[j+1] > self.x[j]: # if the right child has a larger value
+                    j += 1
+            #
+            # if the larger child has a value larger than the root, 
+            # make the larger child the root
+            self.T += 1
+            if self.x[i] < self.x[j]:
+                self.x[i], self.x[j] = self.x[j], self.x[i]
+                i = j # new root index
+                j = 2*i + 1 # new first child index
+            else: # if the heap is intact at the root node, return
+                return 
+        #
+        return
+
+    def sort(self,x):
+        #
+        self.x = x
+        n = len(x)
+        #
+        self.T = 0
+        #
+        self.create_heap(n=n)
+        #
+        while (n > 0):
+            #
+            # move root node of heap to 
+            # the back part of the array
+            self.x[n-1], x[0] = self.x[0], self.x[n-1]
+            #
+            # the unsorted part of the array
+            # has become shorter now
+            n -= 1
+            #
+            # fix the heap at the new root node
+            self.sift_down(0,n)
+            #
+        #
+        output = {'x':self.x,
                   'T':self.T}
         #
         return output

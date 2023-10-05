@@ -51,8 +51,6 @@ def compare_algorithms(algorithms,
                 result = algo.sort(input_array)
                 Times[c,i] += time.time()-start
                 if (sorted_ref != result['x']).any():
-                    #print(sorted_ref)
-                    #print(result['x'])
                     raise RuntimeError("Algorithm {0}"\
                         " returned unsorted array".format(name))
                 #
@@ -70,7 +68,7 @@ def plot_results(algorithms,
                  filename_prefix=None):
         N_samples = len(T[0,0])
         #
-        markers = ['o','s','v','*']
+        markers = ['o','s','v','*','<','>','+','x']
         #
         # First plot: 
         # Mean number of array value comparisons per sorting
@@ -85,7 +83,7 @@ def plot_results(algorithms,
         
         #
         ax.legend(loc='best',
-                fontsize=15,
+                fontsize=13,
                 )
         ax.set_xlabel(r'$N$')
         ax.set_ylabel(r'$\langle T \rangle$')
@@ -197,7 +195,7 @@ def plot_results(algorithms,
                         s=labels[-1])
 
         ax.legend(loc='best',
-                fontsize=15,
+                fontsize=13,
                 )
         plt.show()
         if filename_prefix is not None:
